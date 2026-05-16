@@ -2,7 +2,7 @@
 
 ## Stage 1: REST API Design
 
-The notification system actually is needs APIs for creating, reading, updating, and filtering notifications. The FRontend in will help in call these APIs to show notifications to the students and allows them to to view priority notifications.
+The notification system actually needs APIs for creating the notifications on first step then reading the notification then updating, and filtering notifications. The FRontend in will help in call these APIs to show notifications to the students and allows them to to view priority notifications.
 
 ### API Endpoints
 
@@ -19,7 +19,7 @@ The notification system actually is needs APIs for creating, reading, updating, 
 
 **POST /notifications**
 
-Request body:
+example Request body:
 
 ```json
 {
@@ -31,7 +31,7 @@ Request body:
 
 ## Stage 2: Database Design
 
-PostgreSQL is usually suitable for this notification system since Because the data is structured and it needs the filtering by student, notification type, read status, and timestamp.
+In DB PostgreSQL is usually suitable for this notification system since Because the data is structured and it needs the filtering by student, notification type, read status, and timestamp.
 
 ### Table: notifications
 
@@ -73,12 +73,28 @@ After thinking what i understood is fetching notifications on every single page 
 
 i would recomend the improvements like :
 
-Using pagination instead of loading all notifications.
-trying to Fetch only recent notifications first.
-avoiding repeated API calls if the same data is already loaded.
+--> Using pagination instead of loading all notifications.
+-> trying to Fetch only recent notifications first.
+--> avoiding repeated API calls if the same data is already loaded.
 i am not sure but using WebSocket for real-time updates instead of refreshing the full list repeatedly.
 
 ## Stage 5: Notify All Students Design
 
+so the direct loop-based implementation is risky sometimes because sending emails again saving to DB and then pushing app notifications for all 50,000 students inside whole one single request can result in collapse timeout or partially fail.
+
+so If `send_email` fails after the 200 students, some students may receive notifications and others may not. there will be inconsistent delivery.
+
+so the better suggestion or design can be
+
+1. first Create a notification job when HR clicks "Notify All".
+2. then try to Save the job in DB with status `pending`.
+3. this step we can Add student notification tasks to a queue.
+4. process the queue in batches.
+5. save in-app notifications first.
+6. using to send emails separately through workers.
+7. then retry failed email tasks.
+8. Track job status as pending, processing, completed, or failed.
+
+email support should be sent asynchronously for efficient delivery along with the retry support.
 
 ## Assumptions
