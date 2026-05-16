@@ -123,4 +123,6 @@ async function main() {
   console.log(JSON.stringify(topNotifications, null, 2));
 }
 
-main();
+if (require.main === module) {
+  main();
+}

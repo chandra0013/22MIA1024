@@ -120,3 +120,17 @@ The function performs these steps:
 6. Return to the top 10 notifications.
 
 This keeps the logic simple and efficient because the API data is processed in memory and only the final top notifications are displayed.
+
+## Stage 7: Frontend Implementation
+
+so the frontend is built using combination of React, TypeScript, and Material UI.they work better for this usecase and within 3 hrs. It runs on `http://localhost:3000`.
+
+The application basically has two main views
+1. All Notifications
+2. Priority Notifications
+
+The frontend idea is first it fetches notifications from the provided API using the supported query parameters: `limit`, `page`, and `notification_type`.
+
+later the users can filter notifications by type: Event, Result, and Placement. The UI also shows whether a notification is new or already viewed. Priority notifications are calculated using type weight and recency, where Placement has the highest weight, followed by Result and Event.
+
+The page is kept simple and responsive for desktop and mobile views.
