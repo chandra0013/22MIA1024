@@ -45,13 +45,8 @@ PostgreSQL is usually suitable for this notification system since Because the da
 | created_at | TIMESTAMP DEFAULT CURRENT_TIMESTAMP | Notification time |
 
 ```sql
-CREATE TABLE notifications (
-  id UUID PRIMARY KEY,
-  student_id BIGINT NOT NULL,
-  notification_type VARCHAR(30) NOT NULL,
-  message TEXT NOT NULL,
-  is_read BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE notifications (  id UUID PRIMARY KEY, student_id BIGINT NOT NULL, notification_type VARCHAR(30) NOT NULL,  message TEXT NOT NULL,
+  is_read BOOLEAN DEFAULT FALSE,  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 ## Stage 3: Query Optimization
@@ -74,6 +69,16 @@ ORDER BY created_at DESC;
 
 ## Stage 4: Performance Improvement
 
+After thinking what i understood is fetching notifications on every single page load for every student can overload and it will be complex the database and slow down the application.
+
+i would recomend the improvements like :
+
+Using pagination instead of loading all notifications.
+trying to Fetch only recent notifications first.
+avoiding repeated API calls if the same data is already loaded.
+i am not sure but using WebSocket for real-time updates instead of refreshing the full list repeatedly.
+
 ## Stage 5: Notify All Students Design
+
 
 ## Assumptions
