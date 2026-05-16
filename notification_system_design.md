@@ -56,6 +56,22 @@ CREATE TABLE notifications (
 
 ## Stage 3: Query Optimization
 
+if i observe the query it is correct as per the logic , but it can become slow in cases when the table grows because the database may be scalable and may scan many rows and then sort them.
+
+```sql
+Select * FROM notifications where student_id = 1042 AND is_read = false
+Order BY created_at ASC;
+
+a suitable index can be
+```sql
+Create INDEX idx_notifications_student_read_created ON notifications (student_id, is_read, created_at);
+
+one query useful to find all students placement notification is 
+```sql
+Select student_id, id, notification_type, message, created_at
+FROM notifications WHERE notification_type = 'Placement'  AND created_at >= NOW() - INTERVAL '7 days'
+ORDER BY created_at DESC;
+
 ## Stage 4: Performance Improvement
 
 ## Stage 5: Notify All Students Design
