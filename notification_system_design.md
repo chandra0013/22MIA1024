@@ -97,4 +97,26 @@ so the better suggestion or design can be
 
 email support should be sent asynchronously for efficient delivery along with the retry support.
 
-## Assumptions
+## Stage 6: Priority Notification Function
+
+so after testing The priority inbox fetches the notifications from thegiven protected Notification API. It only reads the API response and selects the top priority unread notifications.
+Priority is calculated using notification type and recency.
+
+Type weight used:
+
+Placement type-3
+result-2
+event-1
+
+Placement notifications are treated as most important on top, followed by Result and Event. If two notifications have similar priority, the newer notification is shown first.
+
+The function performs these steps:
+
+1. dirst itFetch notifications from the protected API.
+2. then Filters the unread or not viewed notifications.
+3. Assign weight based on  the notification type.
+4. Add the recency score using timestamp.
+5. Sort notifications by priority score.
+6. Return to the top 10 notifications.
+
+This keeps the logic simple and efficient because the API data is processed in memory and only the final top notifications are displayed.

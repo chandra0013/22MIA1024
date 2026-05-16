@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "priority": "ts-node-dev --transpile-only src/priorityNotifications.ts",
+  "build": "tsc"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
